@@ -4,7 +4,7 @@ import os
 
 def get_lines(path: str) -> List[str]:
     with open(path, 'r') as f:
-        return [x[:-1] for x in f.readlines()]  # remove the '\n' at the end
+        return [x.replace('\n', '') for x in f.readlines()]  # remove \n at end
 
 
 def replace_line(lines: List[str], to_replace: str,

@@ -10,7 +10,6 @@
 //!                       Support and FAQ: http://support.atmel.no/
 //!
 //! ***************************************************************************
-
 /* Copyright (c) 2009 Atmel Corporation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,9 +39,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 //_____  I N C L U D E S ___________________________________________________
-
 #include "config.h"
 #include "conf_usb.h"
 #include "keyboard_task.h"
@@ -52,23 +49,17 @@
 #include "modules/usb/device_chap9/usb_standard_request.h"
 #include "lib_mcu/power/power_drv.h"
 #include <util/delay.h>
-
-
 //_____ D E F I N I T I O N S ______________________________________________
-
 // start of escape keys.
 // if key_to_send > ESCAPE_KEY_START then the next
 // (key_to_send - ESCAPE_KEY_START) keys are treated as modifiers
 #define ESCAPE_KEY_START 251
-
 // this key (KEY_MEDIA_COFFEE not used I presume) is used to sleep.
 // Amount of sleep in ms is a multiple of SLEEP_MS.
 // The multiple is the next key read.
 // E.g: if we read SLEEP_KEY, we read next_key and sleep (next_key * SLEEP_MS)
 #define SLEEP_KEY 249
-
 #define SLEEP_MS 100
-
 // const U8  code    usb_keys[]= {HID_ENTER, \
 // HID_W, HID_E, HID_L, HID_C, HID_O, HID_M, HID_E, HID_SPACEBAR, HID_T, HID_O, HID_SPACEBAR, HID_H, HID_I, HID_D, HID_SPACEBAR, HID_K, HID_E, HID_Y, HID_B, HID_O, HID_A, HID_R, HID_D, HID_SPACEBAR, HID_D, HID_E, HID_M, HID_O, HID_SPACEBAR, HID_A, HID_N, HID_D, HID_SPACEBAR, HID_C, HID_O, HID_N, HID_G, HID_R, HID_A, HID_T, HID_U, HID_L, HID_A, HID_T, HID_I, HID_O, HID_N, HID_S, HID_SPACEBAR, HID_F, HID_O, HID_R, HID_SPACEBAR, HID_S, HID_E, HID_L, HID_E, HID_C, HID_T, HID_I, HID_N, HID_G, HID_SPACEBAR, HID_T, HID_H, HID_E, HID_SPACEBAR, HID_A, HID_T, HID_9, HID_0, HID_U, HID_S, HID_B, HID_X, HID_X, HID_X, HID_SPACEBAR, HID_M, HID_I, HID_C, HID_R, HID_O, HID_C, HID_O, HID_N, HID_T, HID_R, HID_O, HID_L, HID_L, HID_E, HID_R, HID_SPACEBAR, HID_F, HID_A, HID_M, HID_I, HID_L, HID_Y, HID_DOT,HID_ENTER,HID_ENTER\
 // ,HID_T, HID_H, HID_E, HID_SPACEBAR, HID_A, HID_T, HID_9, HID_0, HID_U, HID_S, HID_B, HID_X, HID_X, HID_X, HID_SPACEBAR,HID_I, HID_S, HID_SPACEBAR, HID_B, HID_A, HID_S, HID_E, HID_D, HID_SPACEBAR,HID_O, HID_N, HID_SPACEBAR, HID_T, HID_H, HID_E, HID_SPACEBAR, HID_A, HID_V, HID_R, HID_SPACEBAR, HID_C, HID_O, HID_R, HID_E, HID_SPACEBAR, HID_W, HID_I, HID_T, HID_H, HID_SPACEBAR, HID_T, HID_H, HID_E, HID_SPACEBAR, HID_F, HID_O, HID_L, HID_L, HID_O, HID_W, HID_I, HID_N, HID_G, HID_SPACEBAR, HID_F, HID_E, HID_A, HID_T, HID_U, HID_R, HID_E, HID_S, HID_ENTER\
@@ -80,18 +71,10 @@
 // ,HID_SPACEBAR,HID_SPACEBAR,HID_A,HID_N,HID_D,HID_SPACEBAR,HID_M,HID_O,HID_R,HID_E,HID_DOT,HID_DOT,HID_DOT,HID_ENTER\
 // ,HID_E,HID_N,HID_J,HID_O,HID_Y,HID_SPACEBAR,HID_Y,HID_O,HID_U,HID_R,HID_SPACEBAR,HID_T,HID_I,HID_M,HID_E,HID_SPACEBAR,HID_W,HID_I,HID_T,HID_H,HID_SPACEBAR,HID_A,HID_T,HID_M,HID_E,HID_L,HID_SPACEBAR,HID_P,HID_R,HID_O,HID_D,HID_U,HID_C,HID_T,HID_S,HID_DOT,HID_DOT,HID_DOT\
 //                            };
-const U8 code usb_keys[] = {HID_ENTER, HID_L, HID_CAPS_LOCK, HID_O, HID_CAPS_LOCK, HID_L, HID_A, HID_A, HID_A, HID_A, HID_A, HID_A, HID_A, HID_A};
-// const U8 code usb_keys[] = {HID_ENTER, HID_A, SLEEP_KEY, 200, HID_B};
-// const U8 code usb_keys[] = {HID_ENTER,\
-//   -1, HID_TAB
-// };
-
+const U8 code usb_keys[] = {HID_ENTER, SLEEP_KEY, 30, ESCAPE_KEY_START + 1, HID_MODIFIER_LEFT_GUI, HID_R, SLEEP_KEY, 5, HID_N, HID_O, HID_T, HID_E, HID_P, HID_A, HID_D, SLEEP_KEY, 5, HID_ENTER, SLEEP_KEY, 7, HID_CAPS_LOCK, HID_H, HID_CAPS_LOCK, HID_E, HID_L, HID_L, HID_O, HID_SPACEBAR, HID_CAPS_LOCK, HID_W, HID_CAPS_LOCK, HID_O, HID_R, HID_L, HID_D, ESCAPE_KEY_START + 1, HID_MODIFIER_LEFT_SHIFT, HID_1, HID_ENTER};
 #define SIZEOF_USB_KEYS     (Uint16)sizeof(usb_keys)
 #define myabs(n)  ((n) < 0 ? -(n) : (n))
-
-
 //_____ D E C L A R A T I O N S ____________________________________________
-
 volatile U8    cpt_sof;
 U8    transmit_no_key;
 volatile bit   key_hit;
@@ -105,8 +88,6 @@ U8   code *    usb_key_pointer;
 #endif
 void process_key(void);
 void sendNothing(void);
-
-
 //! This function initializes the hardware/software ressources required for keyboard task.
 //!
 void keyboard_task_init(void)
@@ -118,8 +99,6 @@ void keyboard_task_init(void)
   // Joy_init();
   cpt_sof           = 0;
 }
-
-
 //! @brief Entry point of the mouse management
 //! This function links the mouse and the USB bus.
 //!
@@ -135,7 +114,6 @@ void keyboard_task(void)
     {
       kbd_test_hit();
     }
-
     else
     {
       Usb_select_endpoint(EP_KBD_IN);
@@ -176,7 +154,6 @@ void keyboard_task(void)
     }
   }
 }
-
 void sendNothing(void) {
   key_hit = FALSE;
   transmit_no_key = FALSE;
@@ -190,11 +167,9 @@ void sendNothing(void) {
   Usb_write_byte(0);
   Usb_send_in();
 }
-
 int modifierKeysToRead = 0;
 U16 modifier = HID_MODIFIER_NONE;
 bool shouldSleep = false;
-
 // This function processes the pressed key and sends it accordingly
 // keys that are negative signal that the following key should be treated as a
 // modifier keys. E.g: if usb_key is -2 this means that the next 2 keys should
@@ -204,7 +179,6 @@ void process_key(void) {
   // if we have to sleep
   if (shouldSleep) {
     // sleep SLEEP_MS * current read key value
-
     // avr requires sleeping a compile-time constant int value. so loop
     // `usb_key` times
     // https://www.avrfreaks.net/forum/error-1-builtinavrdelaycycles-expects-integer-constant
@@ -219,7 +193,6 @@ void process_key(void) {
   }
   if (usb_key > ESCAPE_KEY_START) {
     // start reading modifiers
-
     // set number of keys to read that should be treated as modifers
     modifierKeysToRead = usb_key;
     // modifierKeysToRead = 1;
@@ -254,11 +227,9 @@ void process_key(void) {
     }
   }
 }
-
 bool isFirstMessage = true;
 int keysCounter = 0;
 int firstNKeys = 4;
-
 //! @brief Chech keyboard key hit
 //! This function scans the keyboard keys and update the scan_key word.
 //!   if a key is pressed, the key_hit bit is set to TRUE.
@@ -278,13 +249,11 @@ void kbd_test_hit(void)
         // type usb_keys only once
         if (!isFirstMessage) return;
         isFirstMessage = false;
-
         usb_kbd_state = 1;
         usb_key_pointer = usb_keys;
         usb_data_to_send = SIZEOF_USB_KEYS;
       }
       break;
-
     case 1:
       if (usb_data_to_send != 0)
       {
@@ -306,8 +275,6 @@ void kbd_test_hit(void)
       break;
   }
 }
-
-
 //! @brief vbus_off_action
 //! This function increments the action to be executed upon
 //! the USB VBUS disconnection
@@ -317,8 +284,6 @@ void vbus_off_action(void)
 {
   Usb_detach();
 }
-
-
 void suspend_action(void)
 {
 #if (USB_REMOTE_WAKEUP_FEATURE == ENABLED)
@@ -330,8 +295,6 @@ void suspend_action(void)
   Enable_interrupt();
   Enter_power_down_mode();
 }
-
-
 #ifdef __GNUC__
 ISR(PCINT0_vect)
 #else

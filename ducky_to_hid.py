@@ -146,6 +146,9 @@ class StringConverter(LineConverter):
             result = 'HID_RIGHT_SQUARE_BRACKET'
         elif char == ' ':
             result = 'HID_SPACEBAR'
+        elif char == '!':
+            result = 'ESCAPE_KEY_START + 1, ' + 'HID_MODIFIER_LEFT_SHIFT, ' \
+                + 'HID_1'
         # TODO: implemente all string.printable
         else:
             raise ValueError(f'Char not implemented as HID: {char}')

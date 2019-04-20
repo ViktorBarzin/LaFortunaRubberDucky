@@ -253,9 +253,10 @@ class ExtendedParser(LineParser):
         This method handles some additional special keys that are not typeable.
         '''
         # For now just return the pressed key and deal with it elsewhere
-        if line in self.allowed:  # if line is only 1 keyword
+        if line.replace('\n', '') in self.allowed:  # if line is only 1 keyword
             return line
         else:
+            breakpoint()
             raise Exception(f'One keyword per statement, got: "{line}"')
 
 

@@ -20,10 +20,10 @@ KEYBOARD_TASK_PATH = os.path.join(os.getcwd(), 'USB Keyboard',
                                   'USBKEY_STK525-series6-hidkbd',
                                   'keyboard_task.c')
 MAKEFILE_PATH = os.path.join(os.getcwd(), 'USB Keyboard',
-                                  'USBKEY_STK525-series6-hidkbd-2_0_3-doc',
-                                  'at90usb128', 'demo',
-                                  'USBKEY_STK525-series6-hidkbd',
-                                   'gcc')
+                                          'USBKEY_STK525-series6-hidkbd-2_0_3-doc',
+                                          'at90usb128', 'demo',
+                                          'USBKEY_STK525-series6-hidkbd',
+                                          'gcc')
 
 
 def main():
