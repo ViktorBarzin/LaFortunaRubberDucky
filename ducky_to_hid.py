@@ -32,7 +32,7 @@ class DuckyScriptConverter(object):
                              [x for x in string.printable])))
 
     def convert(self, lines: List[str]) -> str:
-        result = []
+        result = ['HID_ENTER']  # LaFortuna misses first key for some reason
         for line in lines:
             if not line:
                 continue
