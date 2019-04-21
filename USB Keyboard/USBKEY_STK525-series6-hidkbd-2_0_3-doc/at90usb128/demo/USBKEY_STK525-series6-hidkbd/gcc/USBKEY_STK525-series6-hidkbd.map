@@ -725,20 +725,20 @@ END GROUP
  .debug_abbrev  0x00000000000012ed      0x27a default/usb_standard_request.o
  .debug_abbrev  0x0000000000001567       0xed default/usb_task.o
 
-.debug_line     0x0000000000000000     0x19e7
+.debug_line     0x0000000000000000     0x19e1
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x0000000000000000       0x1d /usr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr51/crtat90usb1286.o
  .debug_line    0x000000000000001d      0x1e8 default/wdt_drv.o
- .debug_line    0x0000000000000205      0x39b default/keyboard_task.o
- .debug_line    0x00000000000005a0      0x132 default/power_drv.o
- .debug_line    0x00000000000006d2       0xd6 default/scheduler.o
- .debug_line    0x00000000000007a8      0x119 default/main.o
- .debug_line    0x00000000000008c1       0xec default/usb_descriptors.o
- .debug_line    0x00000000000009ad      0x24c default/usb_device_task.o
- .debug_line    0x0000000000000bf9      0x1d5 default/usb_drv.o
- .debug_line    0x0000000000000dce      0x4b7 default/usb_specific_request.o
- .debug_line    0x0000000000001285      0x4d8 default/usb_standard_request.o
- .debug_line    0x000000000000175d      0x28a default/usb_task.o
+ .debug_line    0x0000000000000205      0x395 default/keyboard_task.o
+ .debug_line    0x000000000000059a      0x132 default/power_drv.o
+ .debug_line    0x00000000000006cc       0xd6 default/scheduler.o
+ .debug_line    0x00000000000007a2      0x119 default/main.o
+ .debug_line    0x00000000000008bb       0xec default/usb_descriptors.o
+ .debug_line    0x00000000000009a7      0x24c default/usb_device_task.o
+ .debug_line    0x0000000000000bf3      0x1d5 default/usb_drv.o
+ .debug_line    0x0000000000000dc8      0x4b7 default/usb_specific_request.o
+ .debug_line    0x000000000000127f      0x4d8 default/usb_standard_request.o
+ .debug_line    0x0000000000001757      0x28a default/usb_task.o
 
 .debug_frame    0x0000000000000000      0x4b4
  *(.debug_frame)
