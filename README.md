@@ -46,3 +46,13 @@ This will read the contents of ```duckyScript.txt```, parse it and make the *hex
 2. Run ```sudo dfu-programmer at90usb1286 erase && sudo dfu-programmer at90usb1286 flash payload.hex``` to erase and reflash it.
 
 # Know issues
+
+- Control combos don't work at the moment
+
+# Contributing
+
+If you'd like to contribute, I'll be happy to accept pull requests.
+The files you should change are:
+- *keyboard_task.c* - if you want to edit low-level key press logic
+- python files - to edit the DuckyScript parsing/converting logic
+- *usb_commun_hid.h* - to add new HID values for keys
