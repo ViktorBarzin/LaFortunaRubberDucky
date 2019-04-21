@@ -1,4 +1,4 @@
-# What is this?
+# What is this
 
 This repository contains contains my final project for **COMP2215** module for **University of Southmapton**.
 
@@ -20,7 +20,7 @@ I've also tweaked the latter to add some new keys and fix old ones.
 The script:
 ```
 DELAY 3000
-GUI r
+WINDOWS r
 DELAY 500
 STRING notepad
 DELAY 500
@@ -29,6 +29,20 @@ DELAY 2750
 STRING Hello World!
 ENTER
 ```
-produces the expected hello world example:
+produces the expected hello world example once the board is plugged in:
 
 ![](lafortuna-rubber-ducky-demo.gif)
+
+# Requirements
+
+1. [Python 3.7+](https://www.python.org/downloads/release/python-370/) to parse DuckyScript and adjust the C file
+2. [Gnu make](https://www.gnu.org/software/make/) to make the project
+3. [dfu-programmer](https://dfu-programmer.github.io/) to flash the *.hex* file on the microcontroller
+
+# How to run your own DuckyScript program
+
+1. Run ```python rubber_ducky_to_hex.py```
+This will read the contents of ```duckyScript.txt```, parse it and make the *hex* file that you should afterwards flash to your microcontroller.
+2. Run ```sudo dfu-programmer at90usb1286 erase && sudo dfu-programmer at90usb1286 flash payload.hex``` to erase and reflash it.
+
+# Know issues
