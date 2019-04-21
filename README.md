@@ -1,9 +1,9 @@
 # What is this
 
-This repository contains contains my final project for **COMP2215** module for **University of Southmapton**.
+This repository contains my final project for the **COMP2215** module for **University of Southmapton**.
 
 ### In short...
-Creates a [rubber ducky](https://shop.hak5.org/products/usb-rubber-ducky-deluxe) using a Atmel microcontroller, parses a DuckyScript file and creates a hex file to flash on the microcontroller.
+Creates a [rubber ducky](https://shop.hak5.org/products/usb-rubber-ducky-deluxe) using an Atmel microcontroller, parses a DuckyScript file and creates a hex file to flash on the microcontroller.
 
 ### More detailed...
 
@@ -19,6 +19,14 @@ The *LaFortuna* board has a *USB controller* which is used in **Device Controlle
 The main change is in `keyboard_task.c` where I've added some custom logic for parsing key presses.
 The keys that are going to be pressed are stored in an array called `usb_keys`.
 The HID values of each key can be found in `usb_commun_hid.h` (a neat table with the values can be found [here](https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2)).
+
+#### Main logic details
+
+The main logic is written in *Python*. It is split in 2 sections - one *parsing* (simplifying) the *DuckyScript* language into something easier to convert to *HID values*.
+
+The second part is a converter that converts characters to their respective HID values.
+
+Both are written utilizing the [chain of responsibility](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) pattern to allow easier addition of new logic/tokens to parse.
 
 # Demo
 
