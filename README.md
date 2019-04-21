@@ -47,7 +47,7 @@ produces the expected hello world example once the board is plugged in:
 # How to run your own DuckyScript program
 
 1. Run ```python rubber_ducky_to_hex.py```
-This will read the contents of ```duckyScript.txt```, parse it and make the *hex* file that you should afterwards flash to your microcontroller.
+This will read the contents of ```duckyScript.txt```, parse it and make the `payload.hex` file that you should afterwards flash to your microcontroller.
 2. Run ```sudo dfu-programmer at90usb1286 erase && sudo dfu-programmer at90usb1286 flash payload.hex``` to erase and reflash it.
 
 # Know issues
